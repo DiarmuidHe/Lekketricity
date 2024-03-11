@@ -1,28 +1,34 @@
-//https://wokwi.com/projects/294342288335700490
-//code we used to have a foundation
 
-#include <LiquidCrystal.h>
 int led = 2;
-
-
+#include <LiquidCrystal.h>
 
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
-
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600);//rate bits are sent
   pinMode(led, OUTPUT);
-  lcd.begin(16, 2);
-
-  lcd.print("Hello World!");
+  
 }
 
+
+
 void loop() {
+
+  
   int knobValue = analogRead(A0);
   Serial.println(knobValue);
-  if(knobValue >= 400){
+  if(knobValue >= 1){
     digitalWrite(led, knobValue);
+    lcd.clear();
+    
   }
   else{
+
     digitalWrite(led, LOW);
+    // caught in an infinite loop where the message does not stop printing on LCD
+    lcd.print("MESSAGE TO ESB");
+    
   }
+  
+  
+
 }
