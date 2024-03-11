@@ -2,11 +2,27 @@
 //code we used to have a foundation
 
 #include <LiquidCrystal.h>
+int led = 2;
+
+
 
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
 
 void setup() {
+  Serial.begin(9600);
+  pinMode(led, OUTPUT);
   lcd.begin(16, 2);
 
   lcd.print("Hello World!");
+}
+
+void loop() {
+  int knobValue = analogRead(A0);
+  Serial.println(knobValue);
+  if(knobValue >= 400){
+    digitalWrite(led, knobValue);
+  }
+  else{
+    digitalWrite(led, LOW);
+  }
 }
