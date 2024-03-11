@@ -3,6 +3,7 @@ int led = 2;
 #include <LiquidCrystal.h>
 
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
+bool lcdPrint = true;
 void setup() {
   Serial.begin(9600);//rate bits are sent
   pinMode(led, OUTPUT);
@@ -17,6 +18,7 @@ void loop() {
   int knobValue = analogRead(A0);
   Serial.println(knobValue);
   if(knobValue >= 1){
+    lcdPrint = true;
     digitalWrite(led, knobValue);
     lcd.clear();
     
@@ -24,8 +26,11 @@ void loop() {
   else{
 
     digitalWrite(led, LOW);
-    // caught in an infinite loop where the message does not stop printing on LCD
-    lcd.print("MESSAGE TO ESB");
+    if(lcdPrint == true ){
+      lcd.print("MESSAGE TO ESB");
+      lcdPrint = false;
+      
+    }
     
   }
   
